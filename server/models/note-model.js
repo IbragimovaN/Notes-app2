@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import validator from "validator";
 
-const ProductSchema = mongoose.Schema(
+const NoteSchema = mongoose.Schema(
   {
     title: {
       type: String,
@@ -11,12 +10,8 @@ const ProductSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    date: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Notes", NotesSchema);
+export default mongoose.model("Note", NoteSchema);
