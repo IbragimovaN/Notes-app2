@@ -6,12 +6,12 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = () => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem("user") || null);
 
   const login = (newUser, collback) => {
     setUser(newUser);
-    localStorage.setItem("user", newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
     collback();
   };
 

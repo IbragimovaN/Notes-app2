@@ -1,18 +1,28 @@
 import { Button, Form, Input } from "antd";
+import axios from "axios";
+import { useAuth } from "../../context/authProvider";
+import { useNavigate } from "react-router";
 
 export const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = (value: string) => {
-    console.log(value);
+    axios
+      .post("/api/register", value)
+      .then((data) =>
+        data.data.error ? console.log(data.data.error) : navigate("/signIn")
+      );
   };
+
   return (
     <Form onFinish={handleSubmit} size="large" layout="vertical">
       <Form.Item
-        label="userName"
-        name="userName"
+        label="name"
+        name="name"
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: "Please input your name!",
           },
         ]}
       >

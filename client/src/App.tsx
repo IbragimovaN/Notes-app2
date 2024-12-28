@@ -1,14 +1,18 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
-import { HomePage, SignUpPage } from "./pages";
+import { HomePage, SignInPage, SignUpPage } from "./pages";
+import { AuthProvider } from "./context/authProvider";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />}>
-        <Route path="signUp" element={<SignUpPage />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />}>
+          <Route path="signUp" element={<SignUpPage />} />
+          <Route path="signIn" element={<SignInPage />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

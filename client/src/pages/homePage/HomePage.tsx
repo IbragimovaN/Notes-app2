@@ -24,8 +24,8 @@ export const HomePage = () => {
       <Layout>
         <Header>notes app</Header>
         <Content>
-          {/* <Outlet /> */}
-          <WorkspacePage />
+          <Outlet />
+          {/* <WorkspacePage /> */}
         </Content>
         <Footer> by Ibragimova AA</Footer>
       </Layout>

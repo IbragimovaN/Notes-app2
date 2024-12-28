@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  console.log("logout");
+  console.log("/logout");
   res.cookie("token", "", { httpOnly: true }).send({});
 });
 
