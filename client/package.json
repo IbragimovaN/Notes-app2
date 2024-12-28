@@ -2,8 +2,6 @@
   "name": "notesapp",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://localhost:3003",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

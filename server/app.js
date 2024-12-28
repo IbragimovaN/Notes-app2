@@ -7,7 +7,7 @@ import cors from "cors";
 const port = 3003;
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 app.use(express.static("../client/dist"));
 app.use(cookieParser());
 app.use(express.json());
