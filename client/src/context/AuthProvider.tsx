@@ -7,7 +7,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem("user") || null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const login = (newUser, collback) => {
     setUser(newUser);
@@ -15,9 +17,10 @@ export const AuthProvider = ({ children }) => {
     collback();
   };
 
-  const logout = () => {
+  const logout = (collback) => {
     setUser(null);
     localStorage.removeItem("user");
+    collback();
   };
   const value = {
     user,
