@@ -64,10 +64,10 @@ export const NotePage = () => {
         <>
           {" "}
           <Title editable={editable ? { onChange: setTitle } : false}>
-            {note.title}
+            {note?.title}
           </Title>
           <Paragraph editable={editable ? { onChange: setText } : false}>
-            {note.text}
+            {note?.text}
           </Paragraph>
         </>
       )}
