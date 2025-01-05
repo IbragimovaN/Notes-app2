@@ -40,7 +40,6 @@ router.post("/", async (req, res) => {
     const newNote = await addNote({
       title: req.body.title,
       text: req.body.text,
-      date: req.body.date,
     });
     res.send({ data: newNote });
   } catch (e) {
