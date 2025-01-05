@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Card } from "antd";
 import axios from "axios";
 import { useAuth } from "../../context/authProvider";
 import { useNavigate } from "react-router";
@@ -12,10 +12,8 @@ export const SignInPage = () => {
       const { user, error } = data.data;
 
       if (error) {
-        console.log(error);
         return <div> error</div>;
       } else {
-        console.log(user);
         auth.login(user, () => {
           messageApi.open({
             type: "success",
@@ -36,37 +34,39 @@ export const SignInPage = () => {
     <>
       {" "}
       {contextHolder}
-      <Form onFinish={handleSubmit} size="large" layout="vertical">
-        <Form.Item
-          label="email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please come up password!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item label={null}>
-          <Button htmlType="submit" type="primary">
-            sign in
-          </Button>
-        </Form.Item>
-      </Form>
+      <Card>
+        <Form onFinish={handleSubmit} size="large" layout="vertical">
+          <Form.Item
+            label="email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please come up password!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label={null}>
+            <Button htmlType="submit" type="primary">
+              sign in
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </>
   );
 };
