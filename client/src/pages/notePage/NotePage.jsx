@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { Typography, Button, Flex, Input, Modal } from "antd";
 import { ControlPanel } from "./components/controlPanel/ControlPanel";
-import { ControlTwoTone, StarTwoTone } from "@ant-design/icons";
+import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
 
 const { Title, Paragraph } = Typography;
@@ -45,10 +45,19 @@ export const NotePage = () => {
         onClick={() => setOpen(true)}
         style={{ right: 0, position: "absolute" }}
         disabled={editable}
-      >
-        {" "}
-        <ControlTwoTone twoToneColor="#722ed1" style={{ fontSize: "25px" }} />
-      </Button>
+        icon={
+          <ControlTwoTone twoToneColor="#722ed1" style={{ fontSize: "25px" }} />
+        }
+      />
+      <Button
+        type="link"
+        onClick={() => navigate(-1)}
+        style={{ left: 0, position: "absolute" }}
+        icon={
+          <RollbackOutlined style={{ fontSize: "25px", color: "#722ed1" }} />
+        }
+      />
+
       {editable ? (
         <CreateNoteField note={note} setNote={setNote} />
       ) : (

@@ -24,11 +24,21 @@ async function deleteNote(id) {
 
 async function getNotes(search = "", limit, page) {
   const [notes, count] = await Promise.all([
-    Note.find({ title: { $regex: search, $options: "i" } })
+    Note.find({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { text: { $regex: search, $options: "i" } },
+      ],
+    })
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({ createdAt: -1 }),
-    Note.countDocuments({ title: { $regex: search, $options: "i" } }),
+    Note.countDocuments({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { text: { $regex: search, $options: "i" } },
+      ],
+    }),
   ]);
   return {
     notes,

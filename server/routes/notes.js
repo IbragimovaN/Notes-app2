@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
       req.query.page
     );
 
-    res.send({ data: { lastPage, notes } });
+    res.send({ lastPage, notes });
   } catch (e) {
     res.send({ error: e.message || "Неизвестная ошибка" });
   }

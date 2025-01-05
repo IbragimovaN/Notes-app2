@@ -27,7 +27,7 @@ export const HomePage = () => {
             <span> Notes App</span>
           </Link>
         </Header>
-        <Content style={{ position: "relative" }}>
+        <Content style={{ position: "relative", padding: "20px 48px" }}>
           <Outlet />
         </Content>
         <Footer> by Ibragimova AA</Footer>
