@@ -17,7 +17,7 @@ export const SignUpPage = () => {
   };
 
   return (
-    <Card>
+    <Card style={{ maxWidth: 400, margin: "50px auto" }}>
       {" "}
       <Form
         onFinish={handleSubmit}
