@@ -74,9 +74,13 @@ router.delete(
   "/:id",
 
   async (req, res) => {
-    console.log("delete");
-    await deleteNote(req.params.id, req.user.id);
-    res.send({ error: null });
+    try {
+      console.log("delete");
+      await deleteNote(req.params.id, req.user.id);
+      res.send({ error: null });
+    } catch (e) {
+      res.send({ error: e.message || "Неизвестная ошибка" });
+    }
   }
 );
 

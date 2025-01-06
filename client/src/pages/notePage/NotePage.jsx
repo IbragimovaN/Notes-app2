@@ -5,6 +5,7 @@ import { Typography, Button, Flex, Modal } from "antd";
 import { ControlPanel } from "./components/controlPanel/ControlPanel";
 import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
+import { ErrorServer } from "../../components/errorServer/ErrorServer";
 
 const { Title, Paragraph } = Typography;
 
@@ -15,6 +16,7 @@ export const NotePage = () => {
   const [note, setNote] = useState({ title: "", text: "" });
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const onChangeNote = () => {
     axios
@@ -23,13 +25,22 @@ export const NotePage = () => {
         text: note.text,
       })
       .then((data) => {
+        if (data.data.error) {
+          setErrorMessage(data.data.error);
+        }
         setEditable(false);
       });
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
-    axios.delete(`/api/notes/${params.id}`).then((data) => navigate("/"));
+    axios.delete(`/api/notes/${params.id}`).then((data) => {
+      if (data.data.error) {
+        setErrorMessage(data.data.error);
+      } else {
+        navigate("/");
+      }
+    });
   };
 
   useEffect(() => {
@@ -81,6 +92,7 @@ export const NotePage = () => {
           <Button onClick={onChangeNote}>Сохранить</Button>
         </Flex>
       )}
+      {errorMessage && <ErrorServer errorMessage={errorMessage} />}
 
       <ControlPanel
         editable={editable}
