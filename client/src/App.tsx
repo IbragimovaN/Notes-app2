@@ -8,7 +8,7 @@ import {
   NotePage,
   AboutPage,
 } from "./pages";
-import { AuthProvider } from "./context/authProvider";
+import { AuthProvider } from "./context/AuthProvider";
 
 function App() {
   return (

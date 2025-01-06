@@ -9,6 +9,8 @@ import { AuthContextType } from "../../../../types";
 
 export const MyHeader = () => {
   const auth: AuthContextType = useAuth();
+  const user = auth.user;
+  console.log(user);
   const navigate = useNavigate();
 
   const onExit = () => {
@@ -50,13 +52,13 @@ export const MyHeader = () => {
         style={{ flex: 1, minWidth: 0, maxWidth: "400px" }}
         overflowedIndicator={<MenuOutlined />}
       />
-      {auth.user && (
+      {user && (
         <Flex gap="small" align="center">
           <Avatar
             style={{ backgroundColor: "#87d068" }}
             icon={<UserOutlined />}
           />{" "}
-          <Typography style={{ color: "#fff" }}>{auth.user.name}</Typography>
+          <Typography style={{ color: "#fff" }}>{user.name}</Typography>
         </Flex>
       )}
     </Header>

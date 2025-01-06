@@ -6,6 +6,7 @@ import { MyHeader, NotesList } from "./components";
 
 export const HomePage = () => {
   const location = useLocation();
+
   return (
     <ConfigProvider
       theme={{

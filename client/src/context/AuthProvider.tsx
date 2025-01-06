@@ -16,7 +16,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(
-    JSON.parse(localStorage.getItem("user") || "null")
+    JSON.parse(localStorage.getItem("user") || "null") || null
   );
 
   const login = (newUser: User, collback: () => void) => {
@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = (collback: () => void) => {
-    setUser(null);
     localStorage.removeItem("user");
+    setUser(null);
     collback();
   };
   const value = {
