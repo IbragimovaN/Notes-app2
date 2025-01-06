@@ -1,7 +1,6 @@
 import Note from "../models/note-model.js";
 
 async function addNote(note, userId) {
-  console.log("addNote", note, userId);
   const newNote = await Note.create({ ...note, userId });
 
   return newNote;
@@ -9,7 +8,7 @@ async function addNote(note, userId) {
 
 async function editNote(id, newData, userId) {
   const updatedNote = await Note.findOneAndUpdate(
-    { _id: id, userId }, // Проверяем, что заметка принадлежит пользователю
+    { _id: id, userId },
     newData,
     { new: true }
   );
@@ -20,37 +19,13 @@ async function editNote(id, newData, userId) {
 }
 
 async function deleteNote(id, userId) {
-  return await Note.deleteOne({ _id: id, userId }); // Проверяем, что заметка принадлежит пользователю
+  return await Note.deleteOne({ _id: id, userId });
 }
-
-// async function getNotes(search = "", limit, page) {
-//   const [notes, count] = await Promise.all([
-//     Note.find({
-//       $or: [
-//         { title: { $regex: search, $options: "i" } },
-//         { text: { $regex: search, $options: "i" } },
-//       ],
-//     })
-//       .limit(limit)
-//       .skip((page - 1) * limit)
-//       .sort({ createdAt: -1 }),
-//     Note.countDocuments({
-//       $or: [
-//         { title: { $regex: search, $options: "i" } },
-//         { text: { $regex: search, $options: "i" } },
-//       ],
-//     }),
-//   ]);
-//   return {
-//     notes,
-//     lastPage: Math.ceil(count / limit),
-//   };
-// }
 
 async function getNotes(userId, search = "", limit, page) {
   const [notes, count] = await Promise.all([
     Note.find({
-      userId, // Фильтруем заметки по userId
+      userId,
       $or: [
         { title: { $regex: search, $options: "i" } },
         { text: { $regex: search, $options: "i" } },
@@ -60,7 +35,7 @@ async function getNotes(userId, search = "", limit, page) {
       .skip((page - 1) * limit)
       .sort({ createdAt: -1 }),
     Note.countDocuments({
-      userId, // Фильтруем по userId
+      userId,
       $or: [
         { title: { $regex: search, $options: "i" } },
         { text: { $regex: search, $options: "i" } },

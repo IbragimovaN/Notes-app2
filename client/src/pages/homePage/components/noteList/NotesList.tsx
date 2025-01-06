@@ -1,7 +1,7 @@
 import { Button, List, Input, Modal, Flex, Pagination } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, Navigate } from "react-router";
+import { Link } from "react-router";
 import { CreateNoteField } from "../../../../components/createNoteField/CreateNoteField";
 import { PAGINATION_LIMIT } from "../../../../constants";
 import { PlusOutlined } from "@ant-design/icons";
@@ -20,10 +20,7 @@ export const NotesList = () => {
 
   const auth: AuthContextType = useAuth();
   const user = auth.user;
-  console.log("userFromList", user);
-  // if (user === null) {
-  //   return <Navigate to="/signIn" />;
-  // }
+
   const { Search } = Input;
 
   const onSearch = (searchValue: string) => {
@@ -59,7 +56,6 @@ export const NotesList = () => {
           `/api/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`
         )
         .then((data) => {
-          console.log(data);
           if (data.data.error) {
             setErrorMessage(data.data.error);
           } else {

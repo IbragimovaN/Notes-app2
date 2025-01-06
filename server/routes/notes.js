@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  console.log("get");
   try {
     const note = await getNote(req.params.id);
 
@@ -36,7 +35,6 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("post new", req.user.id, req.body.title);
   try {
     const newNote = await addNote(
       {
@@ -53,7 +51,6 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/:id", async (req, res) => {
-  console.log("editing");
   try {
     const updatedNote = await editNote(
       req.params.id,
@@ -75,7 +72,6 @@ router.delete(
 
   async (req, res) => {
     try {
-      console.log("delete");
       await deleteNote(req.params.id, req.user.id);
       res.send({ error: null });
     } catch (e) {

@@ -10,11 +10,10 @@ import { AuthContextType } from "../../../../types";
 export const MyHeader = () => {
   const auth: AuthContextType = useAuth();
   const user = auth.user;
-  console.log(user);
   const navigate = useNavigate();
 
   const onExit = () => {
-    axios.post("/api/logout").then((data) =>
+    axios.post("/api/logout").then(() =>
       auth.logout(() => {
         navigate("signIn");
       })
