@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import axios from "axios";
-import { Typography, Button, Flex, Input, Modal } from "antd";
+import { Typography, Button, Flex, Modal } from "antd";
 import { ControlPanel } from "./components/controlPanel/ControlPanel";
 import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
@@ -34,6 +34,11 @@ export const NotePage = () => {
 
   useEffect(() => {
     axios.get(`/api/notes/${params.id}`).then((data) => {
+      console.log(data.data.error);
+      if (data.data.error) {
+        console.log("if", data.data.error);
+        navigate("../notFound");
+      }
       setNote(data.data.data);
     });
   }, [params.id]);

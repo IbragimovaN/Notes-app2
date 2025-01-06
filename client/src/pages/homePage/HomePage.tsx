@@ -1,10 +1,11 @@
 import { ConfigProvider, Layout } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
-import { Link, Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { GithubOutlined } from "@ant-design/icons";
-import { MyHeader } from "./components/header/MyHeader.jsx";
+import { MyHeader, NotesList } from "./components";
 
 export const HomePage = () => {
+  const location = useLocation();
   return (
     <ConfigProvider
       theme={{
@@ -27,7 +28,7 @@ export const HomePage = () => {
       <Layout style={{ minHeight: "100vh" }}>
         <MyHeader />
         <Content style={{ position: "relative", padding: "20px 48px" }}>
-          <Outlet />
+          {location.pathname === "/" ? <NotesList /> : <Outlet />}
         </Content>
         <Footer>
           {" "}
