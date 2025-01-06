@@ -1,23 +1,31 @@
-import { Button, Form, Input, Card } from "antd";
+import { Button, Form, Input, Card, Typography } from "antd";
 import axios from "axios";
 import { useAuth } from "../../context/authProvider";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 export const SignUpPage = () => {
+  const { Text } = Typography;
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = (value: string) => {
     axios
       .post("/api/register", value)
       .then((data) =>
-        data.data.error ? console.log(data.data.error) : navigate("/signIn")
+        data.data.error ? setErrorMessage(data.data.error) : navigate("/signIn")
       );
   };
 
   return (
     <Card>
       {" "}
-      <Form onFinish={handleSubmit} size="large" layout="vertical">
+      <Form
+        onFinish={handleSubmit}
+        size="large"
+        layout="vertical"
+        onChange={() => setErrorMessage(null)}
+      >
         <Form.Item
           label="name"
           name="name"
@@ -60,6 +68,7 @@ export const SignUpPage = () => {
           </Button>
         </Form.Item>
       </Form>
+      {errorMessage && <Text type="danger">{errorMessage}</Text>}
     </Card>
   );
 };

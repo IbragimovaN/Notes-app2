@@ -1,18 +1,22 @@
-import { Button, Form, Input, message, Card } from "antd";
+import { Button, Form, Input, message, Card, Typography } from "antd";
 import axios from "axios";
 import { useAuth } from "../../context/authProvider";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 export const SignInPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const auth = useAuth();
+  const { Text } = Typography;
+
   const handleSubmit = (value: string) => {
     axios.post("/api/login", value).then((data) => {
       const { user, error } = data.data;
 
       if (error) {
-        return <div> error</div>;
+        setErrorMessage(error);
       } else {
         auth.login(user, () => {
           messageApi.open({
@@ -35,7 +39,12 @@ export const SignInPage = () => {
       {" "}
       {contextHolder}
       <Card>
-        <Form onFinish={handleSubmit} size="large" layout="vertical">
+        <Form
+          onFinish={handleSubmit}
+          size="large"
+          layout="vertical"
+          onChange={() => setErrorMessage(null)}
+        >
           <Form.Item
             label="email"
             name="email"
@@ -66,6 +75,7 @@ export const SignInPage = () => {
             </Button>
           </Form.Item>
         </Form>
+        {errorMessage && <Text type="danger">{errorMessage}</Text>}
       </Card>
     </>
   );
