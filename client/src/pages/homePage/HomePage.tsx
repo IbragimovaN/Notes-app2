@@ -1,7 +1,8 @@
 import { ConfigProvider, Layout } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Content, Footer } from "antd/es/layout/layout";
 import { Link, Outlet } from "react-router";
-import { HomeOutlined } from "@ant-design/icons";
+import { GithubOutlined } from "@ant-design/icons";
+import { MyHeader } from "./components/header/MyHeader.jsx";
 
 export const HomePage = () => {
   return (
@@ -16,21 +17,22 @@ export const HomePage = () => {
             footerBg: "#f9f0ff",
             headerColor: "#fff",
           },
+          Menu: {
+            darkItemBg: "#120338",
+          },
         },
       }}
     >
       {" "}
       <Layout style={{ minHeight: "100vh" }}>
-        <Header>
-          <Link to="/">
-            <HomeOutlined />
-            <span> Notes App</span>
-          </Link>
-        </Header>
+        <MyHeader />
         <Content style={{ position: "relative", padding: "20px 48px" }}>
           <Outlet />
         </Content>
-        <Footer> by Ibragimova AA</Footer>
+        <Footer>
+          {" "}
+          by Ibragimova AA <GithubOutlined />
+        </Footer>
       </Layout>
     </ConfigProvider>
   );

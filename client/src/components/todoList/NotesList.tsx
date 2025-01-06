@@ -1,9 +1,12 @@
 import { Button, List, Input, Modal, Flex, Pagination, Grid } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import { CreateNoteField } from "../createNoteField/CreateNoteField";
 import { PAGINATION_LIMIT } from "../../constants";
+import { PlusOutlined } from "@ant-design/icons";
+import { useAuth } from "../../context/authProvider";
+import { SignInPage } from "../../pages";
 
 export const NotesList = () => {
   const [notes, setNotes] = useState([]);
@@ -13,6 +16,11 @@ export const NotesList = () => {
   const [lastPage, setLastPage] = useState(1);
   const [searchPhrase, setSearchPhrase] = useState("");
 
+  const auth = useAuth();
+
+  if (auth.user === null) {
+    return <Navigate to="/signIn" />;
+  }
   const { Search } = Input;
 
   const onSearch = (searchValue) => {
@@ -53,9 +61,11 @@ export const NotesList = () => {
     <>
       <Flex justify="center" gap="large" style={{ marginBottom: "50px" }}>
         {" "}
-        <Button shape="circle" onClick={() => setIsModalOpen(true)}>
-          +
-        </Button>
+        <Button
+          shape="circle"
+          icon={<PlusOutlined />}
+          onClick={() => setIsModalOpen(true)}
+        />
         <Search
           placeholder="input search text"
           onSearch={onSearch}
