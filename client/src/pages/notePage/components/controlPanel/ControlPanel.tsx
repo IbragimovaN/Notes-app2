@@ -1,5 +1,12 @@
 import { Button, Drawer } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+export interface ControlPanelProps {
+  editable: boolean;
+  setEditable: (editable: boolean) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  setIsModalOpen: (isModalOpen: boolean) => void;
+}
 
 export const ControlPanel = ({
   editable,
@@ -7,7 +14,7 @@ export const ControlPanel = ({
   open,
   setOpen,
   setIsModalOpen,
-}) => {
+}: ControlPanelProps) => {
   const onClickEditable = () => {
     setEditable(!editable);
     setOpen(false);

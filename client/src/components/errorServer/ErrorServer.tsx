@@ -1,5 +1,9 @@
 import { Typography } from "antd";
-export const ErrorServer = ({ errorMessage }) => {
+
+interface ErrorServerProps {
+  errorMessage: string;
+}
+export const ErrorServer = ({ errorMessage }: ErrorServerProps) => {
   const { Text } = Typography;
   return (
     <Text style={{ textAlign: "center" }} type="danger">

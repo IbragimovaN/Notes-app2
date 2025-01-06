@@ -7,27 +7,28 @@ import { PAGINATION_LIMIT } from "../../../../constants";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../context/authProvider";
 import { ErrorServer } from "../../../../components/errorServer/ErrorServer";
+import { AuthContextType, Note } from "../../../../types";
 
 export const NotesList = () => {
-  const [notes, setNotes] = useState([]);
-  const [note, setNote] = useState({ title: "", text: "" });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(1);
-  const [searchPhrase, setSearchPhrase] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [note, setNote] = useState<Note>({ title: "", text: "" });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(1);
+  const [searchPhrase, setSearchPhrase] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const auth = useAuth();
+  const auth: AuthContextType = useAuth();
 
   if (auth.user === null) {
     return <Navigate to="/signIn" />;
   }
   const { Search } = Input;
 
-  const onSearch = (searchValue) => {
+  const onSearch = (searchValue: string) => {
     setSearchPhrase(searchValue);
   };
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
       setSearchPhrase("");
     }
@@ -56,6 +57,7 @@ export const NotesList = () => {
         `/api/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`
       )
       .then((data) => {
+        console.log(data);
         if (data.data.error) {
           setErrorMessage(data.data.error);
         } else {
@@ -93,6 +95,7 @@ export const NotesList = () => {
         <CreateNoteField note={note} setNote={setNote} />
       </Modal>
       <Flex vertical justify="space-betwiin" gap="large">
+        {errorMessage && <ErrorServer errorMessage={errorMessage} />}
         {notes && (
           <List
             dataSource={notes}
@@ -103,7 +106,7 @@ export const NotesList = () => {
             )}
           />
         )}
-        {errorMessage && <ErrorServer errorMessage={errorMessage} />}
+
         {!errorMessage && (
           <Flex justify="center" gap="large">
             {" "}

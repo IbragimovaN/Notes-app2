@@ -7,10 +7,11 @@ import {
   UserAddOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { useAuth } from "../../../context/AuthProvider";
+import { User } from "../../../types";
+
 type MenuItem = Required<MenuProps>["items"][number];
 
-const subMenuAccount = {
+const subMenuAccount: { isAuth: MenuItem[]; notAuth: MenuItem[] } = {
   isAuth: [
     {
       key: "exit",
@@ -31,7 +32,7 @@ const subMenuAccount = {
     },
   ],
 };
-export const navMenuItems = (user) => {
+export const navMenuItems = (user: User | null): MenuItem[] => {
   return [
     {
       key: "home",

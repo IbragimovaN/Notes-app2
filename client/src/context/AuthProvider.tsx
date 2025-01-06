@@ -1,23 +1,31 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { AuthContextType, User } from "../types";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext<AuthContextType | null>(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User | null>(
+    JSON.parse(localStorage.getItem("user") || "null")
   );
 
-  const login = (newUser, collback) => {
+  const login = (newUser: User, collback: () => void) => {
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
     collback();
   };
 
-  const logout = (collback) => {
+  const logout = (collback: () => void) => {
     setUser(null);
     localStorage.removeItem("user");
     collback();

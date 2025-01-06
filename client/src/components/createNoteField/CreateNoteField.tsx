@@ -1,14 +1,18 @@
 import { Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { Note } from "../../types";
+export interface CreateNoteFieldProps {
+  note: Note;
+  setNote: (note: Note) => void;
+}
 
-export const CreateNoteField = ({ note, setNote }) => {
+export const CreateNoteField = ({ note, setNote }: CreateNoteFieldProps) => {
   return (
     <>
       <Input
         onChange={(e) => setNote({ ...note, title: e.target.value })}
         value={note.title}
         style={{
-          marginBttom: "0.5em",
           color: " rgba(0, 0, 0, 0.88)",
           fontWeight: 600,
           fontSize: "38px",

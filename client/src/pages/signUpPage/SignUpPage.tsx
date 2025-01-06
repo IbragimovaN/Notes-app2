@@ -1,15 +1,14 @@
 import { Button, Form, Input, Card, Typography } from "antd";
 import axios from "axios";
-import { useAuth } from "../../context/authProvider";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
 export const SignUpPage = () => {
   const { Text } = Typography;
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (value: string) => {
+  const handleSubmit = (value: { email: string; password: string }) => {
     axios
       .post("/api/register", value)
       .then((data) =>

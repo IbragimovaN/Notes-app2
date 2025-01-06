@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { Typography, Button, Flex, Modal } from "antd";
 import { ControlPanel } from "./components/controlPanel/ControlPanel";
 import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
 import { ErrorServer } from "../../components/errorServer/ErrorServer";
+import { Note } from "../../types";
 
 const { Title, Paragraph } = Typography;
 
 export const NotePage = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [editable, setEditable] = useState(false);
-  const [note, setNote] = useState({ title: "", text: "" });
-  const [open, setOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [editable, setEditable] = useState<boolean>(false);
+  const [note, setNote] = useState<Note>({ title: "", text: "" });
+  const [open, setOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onChangeNote = () => {
     axios
@@ -77,12 +78,8 @@ export const NotePage = () => {
       ) : (
         <>
           {" "}
-          <Title editable={editable ? { onChange: setTitle } : false}>
-            {note?.title}
-          </Title>
-          <Paragraph editable={editable ? { onChange: setText } : false}>
-            {note?.text}
-          </Paragraph>
+          <Title>{note?.title}</Title>
+          <Paragraph>{note?.text}</Paragraph>
         </>
       )}
 

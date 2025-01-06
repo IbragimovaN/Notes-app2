@@ -2,12 +2,13 @@ import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router";
 import { UserOutlined, MenuOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../context/AuthProvider";
-import { Typography, Flex, Avatar, Menu, Button } from "antd";
+import { Typography, Flex, Avatar, Menu } from "antd";
 import { navMenuItems } from "../../helpers/NavMenuItems";
 import axios from "axios";
+import { AuthContextType } from "../../../../types";
 
 export const MyHeader = () => {
-  const auth = useAuth();
+  const auth: AuthContextType = useAuth();
   const navigate = useNavigate();
 
   const onExit = () => {
@@ -17,8 +18,8 @@ export const MyHeader = () => {
       })
     );
   };
-  const onClickMenu = (e) => {
-    const routes = {
+  const onClickMenu = (e: { key: string }) => {
+    const routes: { [key: string]: () => void } = {
       exit: onExit,
       signup: () => navigate("signUp"),
       signin: () => navigate("signIn"),

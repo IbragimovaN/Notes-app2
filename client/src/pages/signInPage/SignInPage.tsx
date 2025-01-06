@@ -1,17 +1,17 @@
 import { Button, Form, Input, message, Card, Typography } from "antd";
 import axios from "axios";
-import { useAuth } from "../../context/authProvider";
+import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
 export const SignInPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const auth = useAuth();
   const { Text } = Typography;
 
-  const handleSubmit = (value: string) => {
+  const handleSubmit = (value: { email: string; password: string }) => {
     axios.post("/api/login", value).then((data) => {
       const { user, error } = data.data;
 
