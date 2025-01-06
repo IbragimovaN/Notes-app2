@@ -31,7 +31,6 @@ export const MyHeader = () => {
     }
   };
 
-  console.log(auth.user);
   return (
     <Header
       style={{

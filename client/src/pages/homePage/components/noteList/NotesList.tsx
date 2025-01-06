@@ -31,7 +31,7 @@ export const NotesList = () => {
       setSearchPhrase("");
     }
   };
-  console.log(page);
+
   const handleOk = () => {
     axios
       .post("/api/notes", {
@@ -39,7 +39,6 @@ export const NotesList = () => {
         text: note.text,
       })
       .then((data) => {
-        console.log(data);
         setNotes([data.data.data, ...notes]);
       });
     setIsModalOpen(false);
@@ -51,7 +50,6 @@ export const NotesList = () => {
         `/api/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`
       )
       .then((data) => {
-        console.log(data);
         setNotes(data.data.notes);
         setLastPage(data.data.lastPage);
       });

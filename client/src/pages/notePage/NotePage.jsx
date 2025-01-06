@@ -34,9 +34,7 @@ export const NotePage = () => {
 
   useEffect(() => {
     axios.get(`/api/notes/${params.id}`).then((data) => {
-      console.log(data.data.error);
       if (data.data.error) {
-        console.log("if", data.data.error);
         navigate("../notFound");
       }
       setNote(data.data.data);

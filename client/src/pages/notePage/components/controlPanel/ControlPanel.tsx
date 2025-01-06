@@ -8,8 +8,6 @@ export const ControlPanel = ({
   setOpen,
   setIsModalOpen,
 }) => {
-  console.log("contrlPanel", open);
-
   const onClickEditable = () => {
     setEditable(!editable);
     setOpen(false);
