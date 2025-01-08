@@ -13,7 +13,7 @@ export const MyHeader = () => {
   const navigate = useNavigate();
 
   const onExit = () => {
-    axios.post("/api/logout").then(() =>
+    axios.post("http://localhost:3003/logout").then(() =>
       auth.logout(() => {
         navigate("signIn");
       })

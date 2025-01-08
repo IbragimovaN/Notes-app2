@@ -10,7 +10,7 @@ export const SignUpPage = () => {
 
   const handleSubmit = (value: { email: string; password: string }) => {
     axios
-      .post("/api/register", value)
+      .post("http://localhost:3003/register", value, { withCredentials: true })
       .then((data) =>
         data.data.error ? setErrorMessage(data.data.error) : navigate("/signIn")
       );

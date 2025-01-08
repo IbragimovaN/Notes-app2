@@ -12,26 +12,28 @@ export const SignInPage = () => {
   const { Text } = Typography;
 
   const handleSubmit = (value: { email: string; password: string }) => {
-    axios.post("/api/login", value).then((data) => {
-      const { user, error } = data.data;
+    axios
+      .post("http://localhost:3003/login", value, { withCredentials: true })
+      .then((data) => {
+        const { user, error } = data.data;
 
-      if (error) {
-        setErrorMessage(error);
-      } else {
-        auth.login(user, () => {
-          messageApi.open({
-            type: "success",
-            content: `Hello, ${user.name}`,
-          });
-          const timer = setTimeout(() => {
-            navigate("/", {
-              replace: true,
+        if (error) {
+          setErrorMessage(error);
+        } else {
+          auth.login(user, () => {
+            messageApi.open({
+              type: "success",
+              content: `Hello, ${user.name}`,
             });
-          }, 2000);
-          return () => clearTimeout(timer);
-        });
-      }
-    });
+            const timer = setTimeout(() => {
+              navigate("/", {
+                replace: true,
+              });
+            }, 2000);
+            return () => clearTimeout(timer);
+          });
+        }
+      });
   };
 
   return (

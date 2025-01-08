@@ -36,13 +36,13 @@ export default defineConfig({
       },
     }),
   ],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3003", // адрес Вашего сервера
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""), // если нужно изменить путь
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:3003",
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, ""),
+  //     },
+  //   },
+  // },
 });

@@ -53,7 +53,8 @@ export const NotesList = () => {
     user &&
       axios
         .get(
-          `/api/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`
+          `http://localhost:3003/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
+          { withCredentials: true }
         )
         .then((data) => {
           if (data.data.error) {

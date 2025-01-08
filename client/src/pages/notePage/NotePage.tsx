@@ -21,10 +21,14 @@ export const NotePage = () => {
 
   const onChangeNote = () => {
     axios
-      .patch(`/api/notes/${params.id}`, {
-        title: note.title,
-        text: note.text,
-      })
+      .patch(
+        `http://localhost:3003/notes/${params.id}`,
+        {
+          title: note.title,
+          text: note.text,
+        },
+        { withCredentials: true }
+      )
       .then((data) => {
         if (data.data.error) {
           setErrorMessage(data.data.error);
@@ -35,22 +39,30 @@ export const NotePage = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-    axios.delete(`/api/notes/${params.id}`).then((data) => {
-      if (data.data.error) {
-        setErrorMessage(data.data.error);
-      } else {
-        navigate("/");
-      }
-    });
+    axios
+      .delete(`http://localhost:3003/notes/${params.id}`, {
+        withCredentials: true,
+      })
+      .then((data) => {
+        if (data.data.error) {
+          setErrorMessage(data.data.error);
+        } else {
+          navigate("/");
+        }
+      });
   };
 
   useEffect(() => {
-    axios.get(`/api/notes/${params.id}`).then((data) => {
-      if (data.data.error) {
-        navigate("../notFound");
-      }
-      setNote(data.data.data);
-    });
+    axios
+      .get(`http://localhost:3003/notes/${params.id}`, {
+        withCredentials: true,
+      })
+      .then((data) => {
+        if (data.data.error) {
+          navigate("../notFound");
+        }
+        setNote(data.data.data);
+      });
   }, [params.id]);
 
   return (
