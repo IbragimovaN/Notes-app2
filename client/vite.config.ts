@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       outDir: "dist",
       manifest: {
-        name: "Motes-App",
+        name: "Notes-App",
         short_name: "NotesApp",
         description: "Notes App",
         theme_color: "#f9f0ff",
