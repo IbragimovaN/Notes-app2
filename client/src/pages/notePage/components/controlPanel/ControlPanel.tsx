@@ -27,13 +27,13 @@ export const ControlPanel = ({
     >
       <p>
         {" "}
-        <Button type="link" onClick={onClickEditable} icon={<EditOutlined />}>
+        <Button type="text" onClick={onClickEditable} icon={<EditOutlined />}>
           Редактировать
         </Button>
       </p>
       <p>
         <Button
-          type="link"
+          type="text"
           icon={<DeleteOutlined />}
           onClick={() => setIsModalOpen(true)}
         >

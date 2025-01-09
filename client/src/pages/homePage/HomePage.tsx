@@ -12,6 +12,9 @@ export const HomePage = () => {
       theme={{
         token: {
           colorPrimary: "#722ed1",
+          colorBgTextHover: "#f9f0ff",
+          colorLinkHover: "#722ed1",
+          fontSize: 16,
         },
         components: {
           Layout: {
@@ -21,6 +24,11 @@ export const HomePage = () => {
           },
           Menu: {
             darkItemBg: "#120338",
+            darkPopupBg: "#120338",
+          },
+          Button: {
+            textTextColor: "#120338",
+            textHoverBg: "#f9f0ff",
           },
         },
       }}
