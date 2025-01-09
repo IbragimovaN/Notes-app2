@@ -34,15 +34,20 @@ export const NotesList = () => {
 
   const handleOk = () => {
     axios
-      .post("/api/notes", {
-        title: note.title,
-        text: note.text,
-      })
+      .post(
+        "http://localhost:3003/notes",
+        {
+          title: note.title,
+          text: note.text,
+        },
+        { withCredentials: true }
+      )
       .then((data) => {
         if (data.data.error) {
           setErrorMessage(data.data.error);
         } else {
           setNotes([data.data.data, ...notes]);
+          setNote({ title: "", text: "" });
           setErrorMessage(null);
         }
       });
