@@ -37,7 +37,7 @@ export const HomePage = () => {
       <Layout style={{ minHeight: "100vh" }}>
         <MyHeader />
         <Content style={{ position: "relative", padding: "20px 48px" }}>
-          {location.pathname === "/" ? <NotesList /> : <Outlet />}
+          <Outlet />
         </Content>
         <Footer>
           {" "}

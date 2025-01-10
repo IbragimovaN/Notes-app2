@@ -9,16 +9,27 @@ import {
   AboutPage,
 } from "./pages";
 import { AuthProvider } from "./context/AuthProvider";
+import { NotesList } from "./pages/homePage/components";
+import { PrivatRoute } from "./components";
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/" element={<HomePage />}>
+          <Route
+            index
+            element={
+              <PrivatRoute>
+                <NotesList />
+              </PrivatRoute>
+            }
+          />
           <Route path="signUp" element={<SignUpPage />} />
           <Route path="signIn" element={<SignInPage />} />
           <Route path=":id" element={<NotePage />} />
           <Route path="about" element={<AboutPage />} />
+
           <Route path="*" element={<NotFoundPage />} />
           <Route path="notFound" element={<NotFoundPage />} />
         </Route>
