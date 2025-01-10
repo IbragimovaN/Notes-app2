@@ -1,1 +1,6 @@
-
+a {
+  color: inherit;
+}
+a:hover {
+  color: "#722ed1";
+}
