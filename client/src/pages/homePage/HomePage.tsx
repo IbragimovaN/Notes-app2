@@ -1,12 +1,10 @@
 import { ConfigProvider, Layout } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 import { GithubOutlined } from "@ant-design/icons";
-import { MyHeader, NotesList } from "./components";
+import { MyHeader } from "./components";
 
 export const HomePage = () => {
-  const location = useLocation();
-
   return (
     <ConfigProvider
       theme={{
