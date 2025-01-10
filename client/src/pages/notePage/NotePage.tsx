@@ -7,6 +7,7 @@ import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
 import { ErrorServer } from "../../components/errorServer/ErrorServer";
 import { Note } from "../../types";
+import { BASE_URL } from "../../constants";
 
 const { Title, Paragraph } = Typography;
 
@@ -22,7 +23,7 @@ export const NotePage = () => {
   const onChangeNote = () => {
     axios
       .patch(
-        `http://localhost:3003/notes/${params.id}`,
+        `${BASE_URL}/notes/${params.id}`,
         {
           title: note.title,
           text: note.text,
@@ -40,7 +41,7 @@ export const NotePage = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     axios
-      .delete(`http://localhost:3003/notes/${params.id}`, {
+      .delete(`${BASE_URL}/notes/${params.id}`, {
         withCredentials: true,
       })
       .then((data) => {
@@ -54,7 +55,7 @@ export const NotePage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3003/notes/${params.id}`, {
+      .get(`${BASE_URL}/notes/${params.id}`, {
         withCredentials: true,
       })
       .then((data) => {

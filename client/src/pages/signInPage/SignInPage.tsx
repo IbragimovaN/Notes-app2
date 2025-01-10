@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { BASE_URL } from "../../constants";
 
 export const SignInPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -13,7 +14,7 @@ export const SignInPage = () => {
 
   const handleSubmit = (value: { email: string; password: string }) => {
     axios
-      .post("http://localhost:3003/login", value, { withCredentials: true })
+      .post(`${BASE_URL}/login`, value, { withCredentials: true })
       .then((data) => {
         const { user, error } = data.data;
 

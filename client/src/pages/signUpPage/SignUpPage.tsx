@@ -2,6 +2,7 @@ import { Button, Form, Input, Card, Typography } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { BASE_URL } from "../../constants";
 
 export const SignUpPage = () => {
   const { Text } = Typography;
@@ -10,7 +11,7 @@ export const SignUpPage = () => {
 
   const handleSubmit = (value: { email: string; password: string }) => {
     axios
-      .post("http://localhost:3003/register", value, { withCredentials: true })
+      .post(`${BASE_URL}/register`, value, { withCredentials: true })
       .then((data) =>
         data.data.error ? setErrorMessage(data.data.error) : navigate("/signIn")
       );

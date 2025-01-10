@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
 import { CreateNoteField } from "../../../../components/createNoteField/CreateNoteField";
-import { PAGINATION_LIMIT } from "../../../../constants";
+import { BASE_URL, PAGINATION_LIMIT } from "../../../../constants";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../context/AuthProvider";
 import { ErrorServer } from "../../../../components/errorServer/ErrorServer";
@@ -35,7 +35,7 @@ export const NotesList = () => {
   const handleOk = () => {
     axios
       .post(
-        "http://localhost:3003/notes",
+        `${BASE_URL}/notes`,
         {
           title: note.title,
           text: note.text,
@@ -58,7 +58,7 @@ export const NotesList = () => {
     user &&
       axios
         .get(
-          `http://localhost:3003/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
+          `${BASE_URL}/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
           { withCredentials: true }
         )
         .then((data) => {

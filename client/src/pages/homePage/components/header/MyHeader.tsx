@@ -6,6 +6,7 @@ import { Typography, Flex, Avatar, Menu } from "antd";
 import { navMenuItems } from "../../helpers/NavMenuItems";
 import axios from "axios";
 import { AuthContextType } from "../../../../types";
+import { BASE_URL } from "../../../../constants";
 
 export const MyHeader = () => {
   const auth: AuthContextType = useAuth();
@@ -13,7 +14,7 @@ export const MyHeader = () => {
   const navigate = useNavigate();
 
   const onExit = () => {
-    axios.post("http://localhost:3003/logout").then(() =>
+    axios.post(`${BASE_URL}/logout`).then(() =>
       auth.logout(() => {
         navigate("signIn");
       })
