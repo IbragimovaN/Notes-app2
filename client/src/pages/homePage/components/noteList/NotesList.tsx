@@ -1,4 +1,4 @@
-import { Button, List, Input, Modal, Flex, Pagination } from "antd";
+import { Button, Input, Modal, Flex, Pagination, Card } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
@@ -103,16 +103,13 @@ export const NotesList = () => {
           </Modal>
           <Flex vertical justify="space-betwiin" gap="large">
             {errorMessage && <ErrorServer errorMessage={errorMessage} />}
-            {notes && (
-              <List
-                dataSource={notes}
-                renderItem={(note) => (
-                  <List.Item>
-                    <Link to={`/${note._id}`}> {note.title}</Link>
-                  </List.Item>
-                )}
-              />
-            )}
+            {notes &&
+              notes.map((note) => (
+                <Link to={`/${note._id}`}>
+                  {" "}
+                  <Card title={note.title}>{note.text}</Card>
+                </Link>
+              ))}
 
             {!errorMessage && (
               <Flex justify="center" gap="large">
