@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { AuthContextType, User } from "../types";
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -15,9 +21,14 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(
-    JSON.parse(localStorage.getItem("user") || "null") || null
-  );
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const userData: string | null = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   const login = (newUser: User, collback: () => void) => {
     setUser(newUser);
