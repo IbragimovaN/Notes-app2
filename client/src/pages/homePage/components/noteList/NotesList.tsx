@@ -8,6 +8,10 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../context/AuthProvider";
 import { ErrorServer } from "../../../../components/errorServer/ErrorServer";
 import { AuthContextType, Note } from "../../../../types";
+import {
+  createNoteToIndexedDB,
+  getAllNotesFromIndexedDB,
+} from "../../../../indexedDB/actions";
 
 export const NotesList = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -33,43 +37,64 @@ export const NotesList = () => {
   };
 
   const handleOk = () => {
-    axios
-      .post(
-        `${BASE_URL}/notes`,
-        {
-          title: note.title,
-          text: note.text,
-        },
-        { withCredentials: true }
-      )
-      .then((data) => {
-        if (data.data.error) {
-          setErrorMessage(data.data.error);
-        } else {
-          setNotes([data.data.data, ...notes]);
-          setNote({ title: "", text: "" });
-          setErrorMessage(null);
-        }
-      });
+    createNoteToIndexedDB({
+      title: note.title,
+      text: note.text,
+      _id: Date.now().toString(),
+    }).then((data) => {
+      setNote(data);
+      setNotes([data, ...notes]);
+      setErrorMessage(null);
+    });
     setIsModalOpen(false);
+
+    //старый код
+    // axios
+    //   .post(
+    //     `${BASE_URL}/notes`,
+    //     {
+    //       title: note.title,
+    //       text: note.text,
+    //     },
+    //     { withCredentials: true }
+    //   )
+    //   .then((data) => {
+    //     if (data.data.error) {
+    //       setErrorMessage(data.data.error);
+    //     } else {
+    //       setNotes([data.data.data, ...notes]);
+    //       setNote({ title: "", text: "" });
+    //       setErrorMessage(null);
+    //     }
+    //   });
+    // setIsModalOpen(false);
   };
 
   useEffect(() => {
     user &&
-      axios
-        .get(
-          `${BASE_URL}/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
-          { withCredentials: true }
-        )
-        .then((data) => {
-          if (data.data.error) {
-            setErrorMessage(data.data.error);
-          } else {
-            setNotes(data.data.notes);
-            setLastPage(data.data.lastPage);
-            setErrorMessage(null);
-          }
-        });
+      getAllNotesFromIndexedDB(searchPhrase, page, PAGINATION_LIMIT).then(
+        (data) => {
+          setNotes(data);
+          setNote({ title: "", text: "" });
+          setErrorMessage(null);
+          console.log(data);
+        }
+      );
+    //старый код
+    // axios
+    //   .get(
+    //     `${BASE_URL}/notes?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
+    //     { withCredentials: true }
+    //   )
+    //   .then((data) => {
+    //     if (data.data.error) {
+    //       setErrorMessage(data.data.error);
+    //     } else {
+    //       setNotes(data.data.notes);
+    //       setLastPage(data.data.lastPage);
+    //       setErrorMessage(null);
+    //     }
+    //   });
   }, [searchPhrase, page]);
 
   return (
@@ -105,7 +130,7 @@ export const NotesList = () => {
             {errorMessage && <ErrorServer errorMessage={errorMessage} />}
             {notes &&
               notes.map((note) => (
-                <Link to={`/${note._id}`}>
+                <Link to={`/${note._id}`} key={note._id}>
                   {" "}
                   <Card title={note.title}>{note.text}</Card>
                 </Link>

@@ -1,7 +1,9 @@
 import Note from "../models/note-model.js";
 
 async function addNote(note, userId) {
+  console.log("начало create");
   const newNote = await Note.create({ ...note, userId });
+  console.log("вот что создалось:", newNote);
 
   return newNote;
 }

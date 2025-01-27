@@ -11,8 +11,13 @@ import {
 import { AuthProvider } from "./context/AuthProvider";
 import { NotesList } from "./pages/homePage/components";
 import { PrivatRoute } from "./components";
+import { useEffect } from "react";
+import { createCollectionIndexedDB } from "./indexedDB";
 
 function App() {
+  useEffect(() => {
+    createCollectionIndexedDB();
+  }, []);
   return (
     <AuthProvider>
       <Routes>
