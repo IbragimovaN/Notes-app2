@@ -82,6 +82,10 @@ export const getAllNotesFromIndexedDB = async (
       );
       resolve(filteredNotes);
     };
+    request.onerror = (event) => {
+      console.log("Error :", event);
+      reject(event);
+    };
 
     db.close();
   });

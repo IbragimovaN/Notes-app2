@@ -11,8 +11,8 @@ export const createNoteToIndexedDB = async (note) => {
     request.onsuccess = async (event) => {
       const requestNoteAdded = store.get(note._id);
       requestNoteAdded.onsuccess = async (event) => {
-        await addNoteToMongo(event.target.result);
         resolve(event.target.result);
+        await addNoteToMongo(event.target.result);
       };
     };
     request.onerror = (event) => {

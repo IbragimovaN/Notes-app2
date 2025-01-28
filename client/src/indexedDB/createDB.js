@@ -24,6 +24,13 @@ export const createCollectionIndexedDB = () => {
         keyPath: "_id",
       });
     }
+    console.log(" до!db.objectStoreNames.contains(pendingRequests)");
+    if (!db.objectStoreNames.contains("pendingRequests")) {
+      console.log("!db.objectStoreNames.contains(pendingRequests)");
+      db.createObjectStore("pendingRequests", {
+        keyPath: "timestamp",
+      });
+    }
   };
   request.onsuccess = () => {
     console.log("dataBase opened successfuly");
