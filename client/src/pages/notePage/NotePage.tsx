@@ -8,6 +8,11 @@ import { CreateNoteField } from "../../components";
 import { ErrorServer } from "../../components/errorServer/ErrorServer";
 import { Note } from "../../types";
 import { BASE_URL } from "../../constants";
+import {
+  deleteNoteFromIndexedDB,
+  editNoteIndexedDB,
+  getNoteByIdFromIndexedDB,
+} from "../../indexedDB/api_indexedDB";
 
 const { Title, Paragraph } = Typography;
 
@@ -21,49 +26,61 @@ export const NotePage = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onChangeNote = () => {
-    axios
-      .patch(
-        `${BASE_URL}/notes/${params.id}`,
-        {
-          title: note.title,
-          text: note.text,
-        },
-        { withCredentials: true }
-      )
-      .then((data) => {
-        if (data.data.error) {
-          setErrorMessage(data.data.error);
-        }
-        setEditable(false);
-      });
+    editNoteIndexedDB({
+      title: note.title,
+      text: note.text,
+      _id: params.id,
+    });
+    setEditable(false);
+    // axios
+    //   .patch(
+    //     `${BASE_URL}/notes/${params.id}`,
+    //     {
+    //       title: note.title,
+    //       text: note.text,
+    //       _id: params.id,
+    //     },
+    //     { withCredentials: true }
+    //   )
+    //   .then((data) => {
+    //     if (data.data.error) {
+    //       setErrorMessage(data.data.error);
+    //     }
+    //     setEditable(false);
+    //   });
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
-    axios
-      .delete(`${BASE_URL}/notes/${params.id}`, {
-        withCredentials: true,
-      })
-      .then((data) => {
-        if (data.data.error) {
-          setErrorMessage(data.data.error);
-        } else {
-          navigate("/");
-        }
-      });
+    deleteNoteFromIndexedDB(params.id);
+    navigate("/");
+    // axios
+    //   .delete(`${BASE_URL}/notes/${params.id}`, {
+    //     withCredentials: true,
+    //   })
+    //   .then((data) => {
+    //     if (data.data.error) {
+    //       setErrorMessage(data.data.error);
+    //     } else {
+    //       navigate("/");
+    //     }
+    //   });
   };
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/notes/${params.id}`, {
-        withCredentials: true,
-      })
-      .then((data) => {
-        if (data.data.error) {
-          navigate("../notFound");
-        }
-        setNote(data.data.data);
-      });
+    getNoteByIdFromIndexedDB(params.id).then((note) => {
+      setNote(note);
+    });
+    // axios
+    //   .get(`${BASE_URL}/notes/${params.id}`, {
+    //     withCredentials: true,
+    //   })
+    //   .then((data) => {
+    //     if (data.data.error) {
+    //       navigate("../notFound");
+    //     }
+    //     setNote(data.data.data);
+    //   });
   }, [params.id]);
 
   return (

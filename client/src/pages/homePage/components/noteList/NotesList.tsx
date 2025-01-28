@@ -11,7 +11,7 @@ import { AuthContextType, Note } from "../../../../types";
 import {
   createNoteToIndexedDB,
   getAllNotesFromIndexedDB,
-} from "../../../../indexedDB/actions";
+} from "../../../../indexedDB/api_indexedDB";
 
 export const NotesList = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -74,10 +74,10 @@ export const NotesList = () => {
     user &&
       getAllNotesFromIndexedDB(searchPhrase, page, PAGINATION_LIMIT).then(
         (data) => {
+          console.log(data);
           setNotes(data);
           setNote({ title: "", text: "" });
           setErrorMessage(null);
-          console.log(data);
         }
       );
     //старый код
