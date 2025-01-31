@@ -18,7 +18,6 @@ import { processPendingRequests } from "./indexedDB/api_indexedDB/processPending
 function App() {
   useEffect(() => {
     createCollectionIndexedDB();
-    processPendingRequests();
   }, []);
   return (
     <AuthProvider>
