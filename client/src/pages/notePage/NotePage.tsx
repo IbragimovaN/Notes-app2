@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import axios from "axios";
 import { Typography, Button, Flex, Modal } from "antd";
 import { ControlPanel } from "./components/controlPanel/ControlPanel";
 import { ControlTwoTone, RollbackOutlined } from "@ant-design/icons";
 import { CreateNoteField } from "../../components";
-import { ErrorServer } from "../../components/errorServer/ErrorServer";
 import { Note } from "../../types";
-import { BASE_URL } from "../../constants";
+
 import {
   deleteNoteFromIndexedDB,
   editNoteIndexedDB,
@@ -23,7 +21,6 @@ export const NotePage = () => {
   const [note, setNote] = useState<Note>({ title: "", text: "" });
   const [open, setOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onChangeNote = () => {
     editNoteIndexedDB({
@@ -32,55 +29,18 @@ export const NotePage = () => {
       _id: params.id,
     });
     setEditable(false);
-    // axios
-    //   .patch(
-    //     `${BASE_URL}/notes/${params.id}`,
-    //     {
-    //       title: note.title,
-    //       text: note.text,
-    //       _id: params.id,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((data) => {
-    //     if (data.data.error) {
-    //       setErrorMessage(data.data.error);
-    //     }
-    //     setEditable(false);
-    //   });
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
     deleteNoteFromIndexedDB(params.id);
     navigate("/");
-    // axios
-    //   .delete(`${BASE_URL}/notes/${params.id}`, {
-    //     withCredentials: true,
-    //   })
-    //   .then((data) => {
-    //     if (data.data.error) {
-    //       setErrorMessage(data.data.error);
-    //     } else {
-    //       navigate("/");
-    //     }
-    //   });
   };
 
   useEffect(() => {
     getNoteByIdFromIndexedDB(params.id).then((note) => {
       setNote(note);
     });
-    // axios
-    //   .get(`${BASE_URL}/notes/${params.id}`, {
-    //     withCredentials: true,
-    //   })
-    //   .then((data) => {
-    //     if (data.data.error) {
-    //       navigate("../notFound");
-    //     }
-    //     setNote(data.data.data);
-    //   });
   }, [params.id]);
 
   return (
@@ -119,7 +79,6 @@ export const NotePage = () => {
           <Button onClick={onChangeNote}>Сохранить</Button>
         </Flex>
       )}
-      {errorMessage && <ErrorServer errorMessage={errorMessage} />}
 
       <ControlPanel
         editable={editable}

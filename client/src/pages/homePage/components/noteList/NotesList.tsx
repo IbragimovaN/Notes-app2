@@ -4,13 +4,11 @@ import { Link } from "react-router";
 import { CreateNoteField } from "../../../../components/createNoteField/CreateNoteField";
 import { PAGINATION_LIMIT } from "../../../../constants";
 import { PlusOutlined } from "@ant-design/icons";
-import { ErrorServer } from "../../../../components/errorServer/ErrorServer";
 import { Note } from "../../../../types";
 import { Spin } from "antd";
 import {
   createNoteToIndexedDB,
   getAllNotesFromIndexedDB,
-  processPendingRequests,
 } from "../../../../indexedDB/api_indexedDB";
 
 export const NotesList = () => {
@@ -20,7 +18,6 @@ export const NotesList = () => {
   const [page, setPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<number>(1);
   const [searchPhrase, setSearchPhrase] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { Search } = Input;
 
@@ -41,7 +38,6 @@ export const NotesList = () => {
     }).then((data) => {
       setNote(data);
       setNotes([data, ...notes]);
-      setErrorMessage(null);
     });
     setIsModalOpen(false);
   };
@@ -52,7 +48,6 @@ export const NotesList = () => {
         console.log(data);
         setNotes(data);
         setNote({ title: "", text: "" });
-        setErrorMessage(null);
 
         //временно
         setLastPage(1);
@@ -87,7 +82,6 @@ export const NotesList = () => {
         <CreateNoteField note={note} setNote={setNote} />
       </Modal>
       <Flex vertical justify="space-betwiin" gap="large">
-        {errorMessage && <ErrorServer errorMessage={errorMessage} />}
         {notes &&
           notes.map((note) => (
             <Link to={`/${note._id}`} key={note._id}>
@@ -96,17 +90,15 @@ export const NotesList = () => {
             </Link>
           ))}
 
-        {!errorMessage && (
-          <Flex justify="center" gap="large">
-            {" "}
-            <Pagination
-              current={page}
-              total={lastPage * PAGINATION_LIMIT}
-              pageSize={PAGINATION_LIMIT}
-              onChange={(pageNumber) => setPage(pageNumber)}
-            />
-          </Flex>
-        )}
+        <Flex justify="center" gap="large">
+          {" "}
+          <Pagination
+            current={page}
+            total={lastPage * PAGINATION_LIMIT}
+            pageSize={PAGINATION_LIMIT}
+            onChange={(pageNumber) => setPage(pageNumber)}
+          />
+        </Flex>
       </Flex>
     </>
   );
