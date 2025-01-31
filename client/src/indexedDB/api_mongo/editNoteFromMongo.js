@@ -15,6 +15,6 @@ export const editNoteFromMongo = (id, editingNote) => {
     .catch((error) => {
       console.log("Note editing to mongo error:", error);
       // Если ошибка, можно сохранить запрос для повторной отправки позже
-      savePendingRequest("edit", note);
+      savePendingRequest("edit", editingNote);
     });
 };
