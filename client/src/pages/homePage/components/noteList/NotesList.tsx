@@ -18,6 +18,7 @@ export const NotesList = () => {
   const [page, setPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<number>(1);
   const [searchPhrase, setSearchPhrase] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { Search } = Input;
 
@@ -43,9 +44,10 @@ export const NotesList = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     getAllNotesFromIndexedDB(searchPhrase, page, PAGINATION_LIMIT).then(
       (data) => {
-        console.log(data);
+        setLoading(false);
         setNotes(data);
         setNote({ title: "", text: "" });
 
@@ -82,23 +84,29 @@ export const NotesList = () => {
         <CreateNoteField note={note} setNote={setNote} />
       </Modal>
       <Flex vertical justify="space-betwiin" gap="large">
-        {notes &&
-          notes.map((note) => (
-            <Link to={`/${note._id}`} key={note._id}>
+        {loading ? (
+          <Spin />
+        ) : (
+          <>
+            {" "}
+            {notes &&
+              notes.map((note) => (
+                <Link to={`/${note._id}`} key={note._id}>
+                  {" "}
+                  <Card title={note.title}>{note.text}</Card>
+                </Link>
+              ))}
+            <Flex justify="center" gap="large">
               {" "}
-              <Card title={note.title}>{note.text}</Card>
-            </Link>
-          ))}
-
-        <Flex justify="center" gap="large">
-          {" "}
-          <Pagination
-            current={page}
-            total={lastPage * PAGINATION_LIMIT}
-            pageSize={PAGINATION_LIMIT}
-            onChange={(pageNumber) => setPage(pageNumber)}
-          />
-        </Flex>
+              <Pagination
+                current={page}
+                total={lastPage * PAGINATION_LIMIT}
+                pageSize={PAGINATION_LIMIT}
+                onChange={(pageNumber) => setPage(pageNumber)}
+              />
+            </Flex>
+          </>
+        )}
       </Flex>
     </>
   );
