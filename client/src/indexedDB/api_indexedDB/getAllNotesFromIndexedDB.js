@@ -26,7 +26,11 @@ export const getAllNotesFromIndexedDB = async (
         page,
         limit
       );
-      resolve(filteredNotes);
+      const lastPage = Math.ceil(
+        searchPhrase ? filteredNotes.length / limit : notes.length / limit
+      );
+      console.log("lastPage", lastPage);
+      resolve({ notes: filteredNotes, lastPage });
     };
     request.onerror = (event) => {
       console.log("Error :", event);

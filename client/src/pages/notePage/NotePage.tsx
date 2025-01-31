@@ -54,7 +54,6 @@ export const NotePage = () => {
     <>
       {loading ? (
         <Flex justify="center" align="center" style={{ height: "400px" }}>
-          {" "}
           <Spin />
         </Flex>
       ) : (

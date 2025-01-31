@@ -3,9 +3,12 @@ export const fetchAndFilterNotes = (notes, searchPhrase, page, limit) => {
   if (searchPhrase) {
     notes = notes.filter(
       (note) =>
-        note.title.includes(searchPhrase) || note.content.includes(searchPhrase)
+        note.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+        note.text.includes(searchPhrase.toLowerCase())
     );
   }
+  //сортировка
+  notes = notes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   // Пагинация
   const startIndex = (page - 1) * limit;
   return notes.slice(startIndex, startIndex + limit);
