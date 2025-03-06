@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "notesapp": "file:"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
   }
 }
