@@ -14,7 +14,7 @@ export const MyHeader = () => {
   const navigate = useNavigate();
 
   const onExit = () => {
-    axios.post(`${BASE_URL}/logout`).then(() =>
+    axios.post(`${BASE_URL}/logout`, "", { withCredentials: true }).then(() =>
       auth.logout(() => {
         navigate("signIn");
       })

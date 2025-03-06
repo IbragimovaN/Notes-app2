@@ -18,9 +18,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { user, token } = await login(req.body.email, req.body.password);
-    res
-      .cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-      .send({ error: null, user });
+    res.cookie("token", token, { httpOnly: true }).send({ error: null, user });
   } catch (e) {
     res.send({ error: e.message || "Неизвестная ошибка" });
   }

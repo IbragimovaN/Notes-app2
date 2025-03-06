@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
   try {
     const newNote = await addNote(
       {
+        _id: req.body._id,
         title: req.body.title,
         text: req.body.text,
       },

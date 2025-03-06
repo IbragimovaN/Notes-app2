@@ -11,8 +11,14 @@ import {
 import { AuthProvider } from "./context/AuthProvider";
 import { NotesList } from "./pages/homePage/components";
 import { PrivatRoute } from "./components";
+import { useEffect } from "react";
+import { createCollectionIndexedDB } from "./indexedDB/createDB";
+import { processPendingRequests } from "./indexedDB/api_indexedDB/processPendingRequests";
 
 function App() {
+  useEffect(() => {
+    createCollectionIndexedDB();
+  }, []);
   return (
     <AuthProvider>
       <Routes>
@@ -38,5 +44,5 @@ function App() {
     </AuthProvider>
   );
 }
-
+window.addEventListener("online", processPendingRequests);
 export default App;

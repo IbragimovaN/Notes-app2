@@ -39,7 +39,10 @@ export const HomePage = () => {
         </Content>
         <Footer>
           {" "}
-          by Ibragimova AA <GithubOutlined />
+          <a style={{ color: "#6d6767" }} href="https://github.com/IbragimovaN">
+            {" "}
+            Ibragimova AA <GithubOutlined />
+          </a>
         </Footer>
       </Layout>
     </ConfigProvider>

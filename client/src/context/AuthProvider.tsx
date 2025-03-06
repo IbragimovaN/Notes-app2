@@ -16,7 +16,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(
-    JSON.parse(localStorage.getItem("user") || "null") || null
+    JSON.parse(localStorage.getItem("user") as string)
   );
 
   const login = (newUser: User, collback: () => void) => {
