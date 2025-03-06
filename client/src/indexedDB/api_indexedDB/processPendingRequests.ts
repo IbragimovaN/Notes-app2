@@ -12,9 +12,9 @@ export const processPendingRequests = async () => {
   const pendingRequestsStore = tx.objectStore("pendingRequests");
   const request = await pendingRequestsStore.getAll();
 
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     request.onsuccess = async (event) => {
-      const allRequests = event.target.result;
+      const allRequests = (event.target as IDBRequest).result;
       if (allRequests.length === 0) {
         // Если отложенных запросов нет, просто закрываем базу данных
         db.close();

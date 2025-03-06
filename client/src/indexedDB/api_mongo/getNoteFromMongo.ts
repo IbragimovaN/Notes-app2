@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "../../constants";
-import { savePendingRequest } from "../api_indexedDB";
+import { Note } from "../../types";
 
-export const getNoteFromMongo = (id) => {
+export const getNoteFromMongo = (id: Note["_id"]) => {
   return axios
     .get(`${BASE_URL}/notes/${id}`, { withCredentials: true })
     .then((response) => {
@@ -14,7 +14,5 @@ export const getNoteFromMongo = (id) => {
     })
     .catch((error) => {
       console.error("Note editing to mongo error:", error);
-      // Если ошибка, можно сохранить запрос для повторной отправки позже
-      savePendingRequest("get", note);
     });
 };

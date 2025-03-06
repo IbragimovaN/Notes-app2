@@ -1,8 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { savePendingRequest } from "../api_indexedDB";
+import { Note } from "../../types";
 
-export const editNoteFromMongo = (id, editingNote) => {
+export const editNoteFromMongo = (id: Note["_id"], editingNote: Note) => {
   axios
     .patch(`${BASE_URL}/notes/${id}`, editingNote, { withCredentials: true })
     .then((response) => {

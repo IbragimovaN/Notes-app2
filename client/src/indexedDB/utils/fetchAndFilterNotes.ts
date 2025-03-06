@@ -1,4 +1,11 @@
-export const fetchAndFilterNotes = (notes, searchPhrase, page, limit) => {
+import { Note } from "../../types";
+
+export const fetchAndFilterNotes = (
+  notes: Note[],
+  searchPhrase: string,
+  page: number,
+  limit: number
+) => {
   // Фильтрация по searchPhrase
   if (searchPhrase) {
     notes = notes.filter(
@@ -8,7 +15,12 @@ export const fetchAndFilterNotes = (notes, searchPhrase, page, limit) => {
     );
   }
   //сортировка
-  notes = notes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  notes = notes.sort((a: Note, b: Note) => {
+    if (a.createdAt && b.createdAt) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+    return 0;
+  });
   // Пагинация
   const startIndex = (page - 1) * limit;
   return notes.slice(startIndex, startIndex + limit);

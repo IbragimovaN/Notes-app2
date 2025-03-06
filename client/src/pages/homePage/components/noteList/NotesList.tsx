@@ -47,7 +47,6 @@ export const NotesList = () => {
     setLoading(true);
     getAllNotesFromIndexedDB(searchPhrase, page, PAGINATION_LIMIT).then(
       (data) => {
-        console.log(data);
         setLoading(false);
         setNotes(data.notes);
         setLastPage(data.lastPage);

@@ -72,7 +72,6 @@ router.delete(
   "/:id",
 
   async (req, res) => {
-    console.log("delete", req.params.id, req.user.id);
     try {
       await deleteNote(req.params.id, req.user.id);
       res.send({ error: null });

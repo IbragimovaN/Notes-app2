@@ -44,9 +44,10 @@ export const NotePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    getNoteByIdFromIndexedDB(params.id).then((note) => {
-      setNote(note);
-      // setLoading(false);
+    getNoteByIdFromIndexedDB(params.id).then((currentNote) => {
+      setNote(currentNote);
+
+      setLoading(false);
     });
   }, [params.id]);
 

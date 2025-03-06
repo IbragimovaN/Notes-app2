@@ -1,8 +1,10 @@
-import axios from "axios";
-import { idb } from "../createDB";
+import { Note } from "../../types";
 import { openDB } from "../openDB";
 // Функция для сохранения отложенного запроса
-export const savePendingRequest = async (type, data) => {
+export const savePendingRequest = async (
+  type: string,
+  data: Note | { id: Note["_id"] }
+) => {
   const db = await openDB(); // Используем openDB для открытия базы данных
   const tx = db.transaction("pendingRequests", "readwrite");
 

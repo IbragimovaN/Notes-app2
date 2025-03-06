@@ -1,7 +1,8 @@
-import { addNoteToMongo } from "../api_mongo";
+import { Note } from "../../types";
+import { editNoteFromMongo } from "../api_mongo";
 import { openDB } from "../openDB";
 
-export const createNoteToIndexedDB = async (note) => {
+export const editNoteIndexedDB = async (note: Note) => {
   const db = await openDB();
   const tx = db.transaction("noteData", "readwrite");
   const store = tx.objectStore("noteData");
@@ -9,14 +10,11 @@ export const createNoteToIndexedDB = async (note) => {
 
   return new Promise((resolve, reject) => {
     request.onsuccess = async (event) => {
-      const requestNoteAdded = store.get(note._id);
-      requestNoteAdded.onsuccess = async (event) => {
-        resolve(event.target.result);
-        await addNoteToMongo(event.target.result);
-      };
+      await editNoteFromMongo(note._id, note);
+      resolve((event.target as IDBRequest).result);
     };
     request.onerror = (event) => {
-      console.log("Error creating note:", event);
+      console.log("Error editing note:", event);
       reject(event);
     };
   });
