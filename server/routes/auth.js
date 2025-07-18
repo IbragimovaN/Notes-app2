@@ -4,14 +4,13 @@ import { register, login } from "../controllers/user-controller.js";
 const router = express.Router({ mergeParams: true });
 
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   try {
     const { user, token } = await register(
       req.body.email,
       req.body.name,
       req.body.password
     );
-    res.cookie("token", token, { httpOnly: true }).send({ error: null, user });
+    res.send({ error: null, user });
   } catch (e) {
     res.send({ error: e.message || "Неизвестная ошибка" });
   }
